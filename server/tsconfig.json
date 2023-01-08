@@ -29,7 +29,7 @@
     // */
     // "isolatedModules": true, /* 각 파일을 분리된 모듈로 트랜스파일 ('ts.transpileModule'과 비슷합니다). */
     /* 엄격한 타입-확인 옵션 */
-    "strict": true /* 모든 엄격한 타입-체킹 옵션 활성화 여부 */,
+    "strict": false /* 모든 엄격한 타입-체킹 옵션 활성화 여부 */,
     // "noImplicitAny": true, /* 'any' 타입으로 구현된 표현식 혹은 정의 에러처리 여부 */
     // "strictNullChecks": true, /* 엄격한 null 확인 여부 */
     // "strictFunctionTypes": true, /* 함수 타입에 대한 엄격한 확인 여부 */
