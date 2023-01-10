@@ -15,22 +15,22 @@ import Post from './Post';
 @Entity('subs')
 export default class Sub extends BaseEntity {
   @Index()
-  @Column({ unique: true })
+  @Column({ unique: true, type: String })
   name!: string;
 
-  @Column()
+  @Column({ type: String })
   title!: string;
 
   @Column({ type: 'text', nullable: true })
   description?: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: String })
   imageUrn?: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: String })
   bannerUrn!: string;
 
-  @Column()
+  @Column({ type: String })
   username!: string;
 
   @ManyToOne(() => User)

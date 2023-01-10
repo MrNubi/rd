@@ -6,7 +6,7 @@
     // "모듈 키": 모듈 값 /* 설명: 사용가능 옵션 (설명이 "~ 여부"인 경우 'true', 'false') */
     /* 기본 옵션 */
     // "incremental": true, /* 증분 컴파일 설정 여부 */
-    "target": "es5" /* 사용할 특정 ECMAScript 버전 설정: 'ES3' (기본), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018',
+    "target": "ES6" /* 사용할 특정 ECMAScript 버전 설정: 'ES3' (기본), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018',
   'ES2019', 'ES2020', 혹은 'ESNEXT'. */,
     "module": "commonjs" /* 모듈을 위한 코드 생성 설정: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020',
   or 'ESNext'. */,

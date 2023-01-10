@@ -19,23 +19,23 @@ import Vote from './Vote';
 @Entity('posts')
 export default class Post extends BaseEntity {
   @Index()
-  @Column()
+  @Column({ type: String })
   identifier: string;
 
-  @Column()
+  @Column({ type: String })
   title: string;
 
   @Index()
-  @Column()
+  @Column({ type: String })
   slug: string;
 
   @Column({ nullable: true, type: 'text' })
   body: string;
 
-  @Column()
+  @Column({ type: String })
   subName: string;
 
-  @Column()
+  @Column({ type: String })
   username: string;
 
   @ManyToOne(() => User, (user) => user.posts)
