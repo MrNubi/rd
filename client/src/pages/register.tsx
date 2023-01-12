@@ -23,7 +23,7 @@ function register() {
         // email: email; 이래야하지만 이름이 같으므로 생략 가능
       });
       console.log('res', res);
-      router.push('/login');
+      // router.push('/login');
     } catch (error: any) {
       //any를 넣은건, 어차피 error에 다른 이상한 형식이 들어와서
       //오류낼 확률이 거의없고, 별로 안중요해서...

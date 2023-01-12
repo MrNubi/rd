@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import { AppDataSource } from './data-source';
 import authRoutes from './routes/auth';
 import cors from 'cors';
+import dotenv from 'dotenv';
 
 const app = express();
 // 엔트리 파일(시작점이라는 뜻)
@@ -17,7 +18,7 @@ app.use(
 
 app.use(express.json());
 app.use(morgan('dev'));
-
+dotenv.config();
 app.use('/api/auth', authRoutes);
 
 app.get('/', (_, res) => res.send('Running!'));
