@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { FormEvent, useState } from 'react';
 import InputGroup from '../../components/InputGroup';
 
-const create = () => {
+const Subcreate = () => {
   const [name, setName] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -12,11 +12,12 @@ const create = () => {
   let router = useRouter();
 
   const handleSubmit = async (event: FormEvent) => {
+    console.log(`handleSubmit`);
     event.preventDefault();
 
     try {
       const res = await axios.post('/subs', { name, title, description });
-
+      console.log(`보내기 ${name}, ${title}, ${description}, `);
       router.push(`/r/${res.data.name}`);
     } catch (error: any) {
       console.log(error);
@@ -79,7 +80,7 @@ const create = () => {
   );
 };
 
-export default create;
+export default Subcreate;
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   try {
@@ -95,7 +96,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   } catch (error) {
     // 백엔드에서 요청에서 던져준 쿠키를 이용해 인증 처리할 때 에러가 나면 /login 페이지로 이동
     res.writeHead(307, { Location: '/login' }).end();
-
+    console.log(`${error} 에러때문에 이동 `);
     return { props: {} };
   }
 };

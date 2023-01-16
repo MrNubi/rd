@@ -5,6 +5,7 @@ import authRoutes from './routes/auth';
 import subRoutes from './routes/subs';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 // 엔트리 파일(시작점이라는 뜻)
@@ -19,6 +20,7 @@ app.use(
 
 app.use(express.json());
 app.use(morgan('dev'));
+app.use(cookieParser());
 dotenv.config();
 
 app.use('/api/auth', authRoutes);

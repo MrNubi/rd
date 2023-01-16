@@ -5,8 +5,14 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import cookie from 'cookie';
 import dotenv from 'dotenv';
+import userMiddleware from '../middlewares/user';
+import authMiddleware from '../middlewares/auth';
 
 const router = Router();
+
+const me = async (req: Request, res: Response) => {
+  return res.json(res.locals.user);
+};
 
 const mapError = (errors: Object[]) => {
   return errors.reduce((prev: any, err: any) => {
@@ -132,7 +138,7 @@ const logout = async (_: Request, res: Response) => {
   );
   res.status(200).json({ success: true });
 };
-
+router.get('/me', userMiddleware, authMiddleware);
 router.post('/register', register);
 router.post('/login', login);
 

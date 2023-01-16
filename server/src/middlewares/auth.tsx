@@ -4,6 +4,7 @@ import { User } from '../entities/User';
 
 export default async (req: Request, res: Response, next: NextFunction) => {
   try {
+    console.log('mid_auth');
     // middlewares.user에서 res에 넣어줬으니까 여기선 이렇게 가져오면 됨
     const user: User | undefined = res.locals.user;
 

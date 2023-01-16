@@ -10,10 +10,14 @@ export default function Home() {
   const mover = () => {
     router.push('/login');
   };
+  let mover2 = () => {
+    router.push('/subs/create');
+  };
   return (
     <div className={styles.container}>
       <h1 className="text-3xl font-bold underline">Hello world!</h1>
       <button onClick={mover}>로그인</button>
+      <button onClick={mover2}>Subs</button>
     </div>
   );
 }

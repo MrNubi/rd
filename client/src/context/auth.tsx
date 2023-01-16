@@ -41,7 +41,7 @@ const reducer = (state: State, { type, payload }: Action) => {
         loading: false,
       };
     default:
-      throw new Error(`Unknown action type: ${type}`);
+      throw new Error(`Unknown action type 몰루: ${type}`);
   }
 };
 
@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     authenticated: false,
     loading: true,
   });
-
+  console.log(`state`, state);
   const dispatch = (type: string, payload?: any) => {
     defaultDispatch({ type, payload });
   };
