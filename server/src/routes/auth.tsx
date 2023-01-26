@@ -141,5 +141,6 @@ const logout = async (_: Request, res: Response) => {
 router.get('/me', userMiddleware, authMiddleware);
 router.post('/register', register);
 router.post('/login', login);
+router.post('/logout', userMiddleware, authMiddleware, logout);
 
 export default router;
