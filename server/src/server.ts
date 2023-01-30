@@ -24,7 +24,7 @@ app.use(cookieParser());
 dotenv.config();
 
 app.use('/api/auth', authRoutes);
-
+app.use(express.static('public'));
 app.use('/api/subs', subRoutes);
 
 app.get('/', (_, res) => res.send('Running!'));

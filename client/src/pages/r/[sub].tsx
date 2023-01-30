@@ -5,16 +5,13 @@ import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import useSWR from 'swr';
 import { useAuthState } from '../../context/auth';
 
-const [ownSub, setOwnSub] = useState(false);
-const { authenticated, user } = useAuthState();
-const router = useRouter();
-const subName = router.query.sub;
-const fileInPutRef = useRef<HTMLInputElement>(null);
-
-const handleImgClick = () => {
-  console.log(`이미지 클릭!!`);
-};
 const subPage = () => {
+  const [ownSub, setOwnSub] = useState(false);
+  const { authenticated, user } = useAuthState();
+  const router = useRouter();
+  const subName = router.query.sub;
+  const fileInPutRef = useRef<HTMLInputElement>(null);
+
   const fetcher = async (url: string) => {
     try {
       const res = await axios.get(url);
@@ -60,6 +57,9 @@ const subPage = () => {
   };
 
   const openFileInput = (type: string) => {
+    if (!authenticated) {
+      return;
+    }
     const fileInput = fileInPutRef.current;
     //fileInPutRef를 선택
     if (fileInput) {
