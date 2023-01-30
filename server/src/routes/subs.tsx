@@ -10,24 +10,28 @@ import Post from '../entities/Post';
 // import { makeId } from "../";
 import path from 'path';
 import { fstat, unlinkSync } from 'fs';
+import multer, { FileFilterCallback } from 'multer';
+import { makeId } from '../utils/helper';
 
 const getSub = async (req: Request, res: Response) => {
   const name = req.params.name;
   try {
+    //const sub = await Sub.findOneByOrFail({ name });
     const sub = await Sub.findOneByOrFail({ name });
+    //findOneByOrFail: 하나를 찾거나 fail일 수 있다
 
     // 포스트를 생성한 후에 해당 sub에 속하는 포스트 정보들을 넣어주기
-    const posts = await Post.find({
-      where: { subName: sub.name },
-      order: { createdAt: 'DESC' },
-      relations: ['comments', 'votes'],
-    });
+    // const posts = await Post.find({
+    //   where: { subName: sub.name },
+    //   order: { createdAt: 'DESC' },
+    //   relations: ['comments', 'votes'],
+    // });
 
-    sub.posts = posts;
+    // sub.posts = posts;
 
-    if (res.locals.user) {
-      sub.posts.forEach((p) => p.setUserVote(res.locals.user));
-    }
+    // if (res.locals.user) {
+    //   sub.posts.forEach((p) => p.setUserVote(res.locals.user));
+    // }
 
     return res.json(sub);
   } catch (error) {
@@ -113,68 +117,68 @@ const ownSub = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-// const upload = multer({
-//   storage: multer.diskStorage({
-//     destination: 'public/images',
-//     filename: (_, file, callback) => {
-//       const name = makeId(10);
-//       callback(null, name + path.extname(file.originalname));
-//     },
-//   }),
-//   fileFilter: (_, file: any, callback: FileFilterCallback) => {
-//     if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
-//       callback(null, true);
-//     } else {
-//       callback(new Error('이미지가 아닙니다.'));
-//     }
-//   },
-// });
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: 'public/images',
+    filename: (_, file, callback) => {
+      const name = makeId(10);
+      callback(null, name + path.extname(file.originalname));
+    },
+  }),
+  fileFilter: (_, file: any, callback: FileFilterCallback) => {
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+      callback(null, true);
+    } else {
+      callback(new Error('이미지가 아닙니다.'));
+    }
+  },
+});
 
-// const uploadSubImage = async (req: Request, res: Response) => {
-//   const sub: Sub = res.locals.sub;
-//   try {
-//     const type = req.body.type;
-//     // 파일 유형을 지정치 않았을 시에는 업로든 된 파일 삭제
-//     if (type !== 'image' && type !== 'banner') {
-//       if (!req.file?.path) {
-//         return res.status(400).json({ error: '유효하지 않은 파일' });
-//       }
+const uploadSubImage = async (req: Request, res: Response) => {
+  const sub: Sub = res.locals.sub;
+  try {
+    const type = req.body.type;
+    // 파일 유형을 지정치 않았을 시에는 업로든 된 파일 삭제
+    if (type !== 'image' && type !== 'banner') {
+      if (!req.file?.path) {
+        return res.status(400).json({ error: '유효하지 않은 파일' });
+      }
 
-//       // 파일을 지워주기
-//       unlinkSync(req.file.path);
-//       return res.status(400).json({ error: '잘못된 유형' });
-//     }
+      // 파일을 지워주기
+      unlinkSync(req.file.path);
+      return res.status(400).json({ error: '잘못된 유형' });
+    }
 
-//     let oldImageUrn: string = '';
+    let oldImageUrn: string = '';
 
-//     if (type === 'image') {
-//       // 사용중인 Urn 을 저장합니다. (이전 파일을 아래서 삭제하기 위해서)
-//       oldImageUrn = sub.imageUrn || '';
-//       // 새로운 파일 이름을 Urn 으로 넣어줍니다.
-//       sub.imageUrn = req.file?.filename || '';
-//     } else if (type === 'banner') {
-//       oldImageUrn = sub.bannerUrn || '';
-//       sub.bannerUrn = req.file?.filename || '';
-//     }
-//     await sub.save();
+    if (type === 'image') {
+      // 사용중인 Urn 을 저장합니다. (이전 파일을 아래서 삭제하기 위해서)
+      oldImageUrn = sub.imageUrn || '';
+      // 새로운 파일 이름을 Urn 으로 넣어줍니다.
+      sub.imageUrn = req.file?.filename || '';
+    } else if (type === 'banner') {
+      oldImageUrn = sub.bannerUrn || '';
+      sub.bannerUrn = req.file?.filename || '';
+    }
+    await sub.save();
 
-//     // 사용하지 않는 이미지 파일 삭제
-//     if (oldImageUrn !== '') {
-//       const fullFilename = path.resolve(
-//         process.cwd(),
-//         'public',
-//         'images',
-//         oldImageUrn
-//       );
-//       unlinkSync(fullFilename);
-//     }
+    // 사용하지 않는 이미지 파일 삭제
+    if (oldImageUrn !== '') {
+      const fullFilename = path.resolve(
+        process.cwd(),
+        'public',
+        'images',
+        oldImageUrn
+      );
+      unlinkSync(fullFilename);
+    }
 
-//     return res.json(sub);
-//   } catch (error) {
-//     console.log(error);
-//     return res.status(500).json({ error: '문제가 발생했습니다.' });
-//   }
-// };
+    return res.json(sub);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: '문제가 발생했습니다.' });
+  }
+};
 
 const router = Router();
 
@@ -185,8 +189,8 @@ router.post(
   '/:name/upload',
   userMiddleware,
   authMiddleware,
-  ownSub
-  // upload.single("file"),
-  // uploadSubImage
+  ownSub,
+  upload.single('file'),
+  uploadSubImage
 );
 export default router;
