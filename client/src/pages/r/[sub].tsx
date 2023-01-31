@@ -24,10 +24,7 @@ const subPage = () => {
 
   // 여기에서의 sub는 파일 명 안의 [sub]를 받음
 
-  const { data: sub, error } = useSWR(
-    subName ? `/subs/${subName}` : null,
-    fetcher
-  );
+  const { data: sub, error } = useSWR(subName ? `/subs/${subName}` : null);
   useEffect(() => {
     if (!sub || !user) return;
     setOwnSub(authenticated && user.username === sub.username);
