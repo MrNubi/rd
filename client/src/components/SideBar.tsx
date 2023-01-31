@@ -25,7 +25,7 @@ const SideBar = ({ sub }: Props) => {
               <p>멤버</p>
             </div>
           </div>
-          <p className="my-3">{sub?.createdAt}</p>
+          <p className="my-3"> {dayjs(sub?.createdAt).format('MM.DD.YYYY')}</p>
           {authenticated && (
             <div className="mx-0 my-2">
               <Link legacyBehavior href={`/r/${sub.name}/create`}>
