@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import useSWR from 'swr';
+import SideBar from '../../components/SideBar';
 import { useAuthState } from '../../context/auth';
 
 const subPage = () => {
@@ -130,7 +131,12 @@ const subPage = () => {
               </div>
             </div>
             {/* 포스트와 사이드 바 부분 */}
-            <div className="flex max-w-5xl px-4 pt-5 mx-auto"></div>
+            <div className="flex max-w-5xl px-4 pt-5 mx-auto">
+              <div className="w-full md:mr-3 md:w-8/12">
+                {/* {renderPosts}  */}
+              </div>
+              <SideBar sub={sub} />
+            </div>
           </React.Fragment>
         )
         // 컴포넌트가 여러 엘리먼트를 return 할때 jsx규칙상 하나의 태그로 묶어서 return 해줘야 하는데, 이때 fragment를 사용하면 dom에 별도의 노드를 추가하지 않고 여러자식을 그룹화 할 수 있다
