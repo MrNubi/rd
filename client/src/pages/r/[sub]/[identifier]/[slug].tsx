@@ -11,14 +11,21 @@ import { FaArrowUp, FaArrowDown } from 'react-icons/fa';
 
 const PostPage = () => {
   const router = useRouter();
+
   const { identifier, sub, slug } = router.query;
+
   const { authenticated, user } = useAuthState();
+
   const [newComment, setNewComment] = useState('');
+
   const {
     data: post,
     error,
     mutate: postMutate,
   } = useSWR<Post>(identifier && slug ? `/posts/${identifier}/${slug}` : null);
+  //mutate: SWR의 기능, 캐시된 함수를 갱신하기 위한 함수, 캐시된 것이 있더라도 의도적으로 데이터를 갱신해서 보여줘야 하는 경우 사용
+  //ex. 글/댓글 생성시 기존의 캐시데이터는 유효하지 않으므로 갱신후 노출
+  //요청을 한 번 더 보내서 캐시된 값을 업데이트 해주는 형식
   const { data: comments, mutate: commentMutate } = useSWR<Comment[]>(
     identifier && slug ? `/posts/${identifier}/${slug}/comments` : null
   );
@@ -28,7 +35,6 @@ const PostPage = () => {
     if (newComment.trim() === '') {
       return;
     }
-
     try {
       await axios.post(`/posts/${post?.identifier}/${post?.slug}/comments`, {
         body: newComment,
@@ -64,7 +70,9 @@ const PostPage = () => {
       console.log(error);
     }
   };
+
   console.log('post.userVote', post?.userVote);
+
   return (
     <div className="flex max-w-5xl px-4 pt-5 mx-auto">
       <div className="w-full md:mr-3 md:w-8/12">
