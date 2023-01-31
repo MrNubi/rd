@@ -3,8 +3,10 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import useSWR from 'swr';
+import PostCard from '../../components/PostCard';
 import SideBar from '../../components/SideBar';
 import { useAuthState } from '../../context/auth';
+import { Post } from '../../types';
 
 const subPage = () => {
   const [ownSub, setOwnSub] = useState(false);
@@ -24,7 +26,11 @@ const subPage = () => {
 
   // 여기에서의 sub는 파일 명 안의 [sub]를 받음
 
-  const { data: sub, error } = useSWR(subName ? `/subs/${subName}` : null);
+  const {
+    data: sub,
+    error,
+    mutate,
+  } = useSWR(subName ? `/subs/${subName}` : null);
   useEffect(() => {
     if (!sub || !user) return;
     setOwnSub(authenticated && user.username === sub.username);
@@ -65,6 +71,21 @@ const subPage = () => {
       fileInput.click();
     }
   };
+
+  let renderPosts;
+  if (!sub) {
+    renderPosts = <p className="text-lg text-center">로딩중...</p>;
+  } else if (sub.posts.length === 0) {
+    console.log('subs', sub);
+    renderPosts = (
+      <p className="text-lg text-center">아직 작성된 포스트가 없습니다.</p>
+    );
+    console.log('posts', sub.posts);
+  } else {
+    renderPosts = sub.posts.map((post: Post) => (
+      <PostCard key={post.identifier} post={post} subMutate={mutate} />
+    ));
+  }
 
   console.log(`sub`, sub);
 
@@ -129,9 +150,7 @@ const subPage = () => {
             </div>
             {/* 포스트와 사이드 바 부분 */}
             <div className="flex max-w-5xl px-4 pt-5 mx-auto">
-              <div className="w-full md:mr-3 md:w-8/12">
-                {/* {renderPosts}  */}
-              </div>
+              <div className="w-full md:mr-3 md:w-8/12">{renderPosts}</div>
               <SideBar sub={sub} />
             </div>
           </React.Fragment>

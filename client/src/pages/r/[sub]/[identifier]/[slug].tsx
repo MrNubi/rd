@@ -29,6 +29,7 @@ const PostPage = () => {
   const { data: comments, mutate: commentMutate } = useSWR<Comment[]>(
     identifier && slug ? `/posts/${identifier}/${slug}/comments` : null
   );
+  //mutate: commentMutate 이부분이 mutate라고 중복선언되는 걸 막기위해 이름 구조분해할당한 것
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -201,7 +202,7 @@ const PostPage = () => {
                       onClick={() => vote(-1, comment)}
                     >
                       {comment.userVote === -1 ? (
-                        <FaArrowDown className="text-red-500" />
+                        <FaArrowDown className="text-blue-500" />
                       ) : (
                         <FaArrowDown />
                       )}
