@@ -12,7 +12,7 @@ const Login = () => {
   const [errors, setErrors] = useState<any>({});
   const { authenticated } = useAuthState();
   const dispatch = useAuthDispatch();
-
+  // 페이지 새로고침시 로그인 초기화 현상 고쳐야됨
   if (authenticated) router.push('/');
 
   const handleSubmit = async (event: FormEvent) => {
