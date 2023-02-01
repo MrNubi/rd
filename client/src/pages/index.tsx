@@ -8,7 +8,8 @@ import { NextPage } from 'next';
 import Link from 'next/link';
 import { useAuthState } from '../context/auth';
 import useSWR from 'swr';
-import { Sub } from '../types';
+import useSWRInfinite from 'swr/infinite';
+import { Post, Sub } from '../types';
 import axios from 'axios';
 
 const Home: NextPage = () => {
@@ -21,6 +22,34 @@ const Home: NextPage = () => {
   const { data: topSubs } = useSWR<Sub[]>(address, fetcher);
   console.log('topSubs : ', topSubs);
   const { authenticated } = useAuthState();
+
+  const getKey = (pageIndex: number, previousPageData: Post[]) => {
+    if (previousPageData && !previousPageData.length) {
+      return null;
+      //previousPageData가 있고, 그 길이가 부정값(null, 0 이런거)면 null 반환
+      //-> 더이상 가져 올 페이지가 없기 때문
+    }
+    //아니라면(더 가져올 페이지가 있다면), 경로를 지정해줌
+    return `/posts?page=${pageIndex}`;
+  };
+  const {
+    data,
+    error,
+    size: page,
+    setSize: setPage,
+    isValidating,
+    mutate,
+  } = useSWRInfinite<Post[]>(getKey);
+  /*
+      data: 각 페이지의 가져오기 응답값의 배열
+      error: useSWR의 error과 동일
+      size: 가져올 페이지 및 반환될 페이지의 수
+      setSize :  가져와야 되는  페이지의 수를 설정
+      isValidating: useSWR과 동일, 데이터 fetching중인지 알아내는 boolean 값 -> loading중인지 아닌지
+      -> 일부 자료에서는 const isLoading = (!data && !error) || isValidating 이런식으로 data와 error이 없는 상황까지 넣어서 로딩을 체크해준다고함
+      mutate : useSWR의 바인딩된 뮤테이트 함수와 동일하지만, 데이터 배열을 다룸
+      
+    */
 
   return (
     <div className="flex max-w-5xl px-4 pt-5 mx-auto">
