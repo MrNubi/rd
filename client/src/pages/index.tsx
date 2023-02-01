@@ -11,6 +11,7 @@ import useSWR from 'swr';
 import useSWRInfinite from 'swr/infinite';
 import { Post, Sub } from '../types';
 import axios from 'axios';
+import PostCard from '../components/PostCard';
 
 const Home: NextPage = () => {
   let router = useRouter();
@@ -40,6 +41,9 @@ const Home: NextPage = () => {
     isValidating,
     mutate,
   } = useSWRInfinite<Post[]>(getKey);
+
+  const isInitialLoading = !data && !error;
+  const posts: Post[] = data ? ([] as Post[]).concat(...data) : [];
   /*
       data: 각 페이지의 가져오기 응답값의 배열
       error: useSWR의 error과 동일
@@ -57,15 +61,12 @@ const Home: NextPage = () => {
 
       <div className="w-full md:mr-3 md:w-8/12">
         {/*md 사이즈일때 사이즈 재조정하라고 지정해놓음  */}
-        {
-          // isInitialLoading &&
+        {isInitialLoading && (
           <p className="text-lg text-center">로딩중입니다...</p>
-        }
-        {
-          // posts?.map((post) => (
-          //   <PostCard key={post.identifier} post={post} mutate={mutate} />
-          // ))
-        }
+        )}
+        {posts?.map((post) => (
+          <PostCard key={post.identifier} post={post} mutate={mutate} />
+        ))}
       </div>
 
       {/* 사이드바 */}
