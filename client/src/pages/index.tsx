@@ -94,7 +94,7 @@ const Home: NextPage = () => {
   }, [posts]);
 
   return (
-    <div className="flex max-w-5xl px-4 pt-5 mx-auto">
+    <div className="flex mt-5 max-w-5xl px-4 pt-5 mx-auto">
       {/* 포스트 리스트 */}
 
       <div className="w-full md:mr-3 md:w-8/12">

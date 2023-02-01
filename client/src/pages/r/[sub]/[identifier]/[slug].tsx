@@ -156,7 +156,7 @@ const PostPage = () => {
                       ></textarea>
                       <div className="flex justify-end">
                         <button
-                          className="px-3 py-1 text-white bg-gray-400 rounded"
+                          className="px-3 py-1 mb-2 text-white bg-gray-400 rounded"
                           disabled={newComment.trim() === ''}
                         >
                           댓글 작성

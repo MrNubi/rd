@@ -27,7 +27,7 @@ const Subcreate = () => {
 
   return (
     <div className="flex flex-col justify-center pt-16">
-      <div className="w-10/12 mx-auto md:w-96">
+      <div className="w-10/12 mx-auto md:w-96 bg-white rounded p-4">
         <h1 className="mb-2 text-lg font-medium">커뮤니티 만들기</h1>
         <hr />
         {/*<hr/>: 콘텐츠 내용에서 주제가 바뀔 때 사용할 수 있는 수평 가로선을 정의할 때 사용, html5부터는 css로 컨트롤하게 바뀜 */}

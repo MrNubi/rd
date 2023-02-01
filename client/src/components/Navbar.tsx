@@ -1,6 +1,8 @@
 import axios from 'axios';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useAuthDispatch, useAuthState } from '../context/auth';
+import { FaSearch } from 'react-icons/fa';
 
 const navbar: React.FC = () => {
   const { loading, authenticated } = useAuthState();
@@ -24,23 +26,22 @@ const navbar: React.FC = () => {
   };
   return (
     <div className="fixed inset-x-0 top-0 z-10 flex items-center justify-between px-5 bg-white h-13">
-      <span className="text-2xl font-semibold text-gray-400">
+      <span className="text-2xl mb-0 font-semibold text-gray-400">
         <Link legacyBehavior href="/">
-          {/* <a>
-                <Image
-                    src="/reddit-name-logo.png"
-                    alt="logo"
-                    width={80}
-                    height={45}
-                >
-                </Image>
-                </a> */}
-          Community logo
+          <a>
+            <Image
+              className=" m-2"
+              src="/wagle_logo.png"
+              alt="logo"
+              width={60}
+              height={35}
+            ></Image>
+          </a>
         </Link>
       </span>
       <div className="max-w-full px-4">
         <div className="relative flex items-center bg-gray-100 border rounded hover:border-gray-700 hover:bg-white">
-          {/* <FaSearch className="ml-2 text-gray-400" /> */}
+          <FaSearch className="ml-2 text-gray-400" />
           <input
             type="text"
             placeholder="Search ..."
