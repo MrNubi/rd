@@ -6,8 +6,8 @@ import Post from '../entities/Post';
 import Comment from '../entities/Comment';
 
 const getPosts = async (req: Request, res: Response) => {
-  const currentPage: number = (req.query.page || 0) as number;
-  const perPage: number = (req.query.count || 8) as number;
+  const currentPage: number = (req.query.page || 0) as number; // req.query.page있으면 쓰고 아니면 0
+  const perPage: number = (req.query.count || 8) as number; // req.query.count있으면 쓰고 아니면 0
 
   try {
     const posts = await Post.find({

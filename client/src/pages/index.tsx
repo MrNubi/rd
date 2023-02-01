@@ -12,6 +12,7 @@ import useSWRInfinite from 'swr/infinite';
 import { Post, Sub } from '../types';
 import axios from 'axios';
 import PostCard from '../components/PostCard';
+import { useEffect, useState } from 'react';
 
 const Home: NextPage = () => {
   let router = useRouter();
@@ -54,6 +55,43 @@ const Home: NextPage = () => {
       mutate : useSWR의 바인딩된 뮤테이트 함수와 동일하지만, 데이터 배열을 다룸
       
     */
+
+  const [observedPost, setObservedPost] = useState(''); //8번째 댓글 id 넣을 곳
+  const observeElement = (element: HTMLElement | null) => {
+    if (!element) {
+      //null 은 여기서 catch
+      console.log(`!element return`);
+      return;
+    }
+    //element가 있다면, 브라우저의 뷰포트와 설정한 엘리먼트간의 교차점을 관찰
+    const observer = new IntersectionObserver(
+      //entries 는 IntersectionObserverEntries의 인스턴스의 배열
+      (entries) => {
+        //isIntersecting: 관찰 대상들끼리의 교차 여부 Boolean
+        if (entries[0].isIntersecting === true) {
+          console.log('마지막 포스트에 왔습니다.');
+          setPage(page + 1);
+          observer.unobserve(element); //이 전에 옵저빙하고있던 것을 없에줌
+        }
+      },
+      { threshold: 1 } // 다 들어갔을 때 콜백함수 실행
+    );
+    // 대상 요소의 관찰을 시작
+    observer.observe(element);
+  };
+  useEffect(() => {
+    //post가 없다면 바로 리턴
+    if (!posts || posts.length === 0) return;
+    // posts 배열 안의 마지막 아이디 가져오기
+    const id = posts[posts.length - 1].identifier;
+    // post 배열에 새로 포스트가 들어가서 포스트가 바뀌었으면
+    // 바뀐 포스트 배열의 마지막 포스트를 찾아서 걔 id따줘야됨
+    // 즉, 그 포스트가 observedPost 되는 것
+    if (id !== observedPost) {
+      setObservedPost(id);
+      observeElement(document.getElementById(id));
+    }
+  }, [posts]);
 
   return (
     <div className="flex max-w-5xl px-4 pt-5 mx-auto">
