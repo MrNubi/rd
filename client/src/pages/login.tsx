@@ -42,31 +42,49 @@ const Login = () => {
   };
 
   return (
-    <div className="bg-white">
+    <div style={{ background: '#BEBEBE' }}>
       <div className="flex flex-col items-center justify-center h-screen p-6">
-        <div className="w-10/12 mx-auto md:w-96">
-          <h1 className="mb-2 text-lg font-medium">로그인</h1>
+        <div className="w-10/12 bg-white p-3 rounded-xl mx-auto md:w-96">
+          <h1 className="mb-2 text-center  text-lg font-bold">MEMOP</h1>
           <form onSubmit={handleSubmit}>
             <InputGroup
-              placeholder="Username"
+              className=" mb-3
+            "
+              placeholder="ID"
               value={username}
               setValue={setUsername}
               error={errors.username}
             />
             <InputGroup
-              placeholder="Password"
+              className=" mb-3
+            "
+              type="password"
+              placeholder="PW"
               value={password}
               setValue={setPassword}
               error={errors.password}
             />
-            <button className="w-full py-2 mb-1 text-xs font-bold text-white uppercase bg-gray-400 border border-gray-400 rounded">
-              로그인
+            <button
+              className="w-full py-2 mb-1 text-xs font-bold text-white uppercaseborder border-gray-400 rounded-2xl"
+              style={{ background: '#535353' }}
+            >
+              Login
             </button>
           </form>
-          <small>
-            아직 아이디가 없나요?
-            <Link legacyBehavior href="/register">
-              <a className="ml-1 text-blue-500 uppercase">회원가입</a>
+          <small className=" flex justify-center">
+            <Link
+              className=" mr-2     uppercase"
+              style={{ color: '#626262' }}
+              href="/register"
+            >
+              아이디 찾기
+            </Link>
+            <Link
+              className=" ml-2 uppercase"
+              style={{ color: '#626262' }}
+              href="/register"
+            >
+              비밀번호 찾기
             </Link>
           </small>
         </div>

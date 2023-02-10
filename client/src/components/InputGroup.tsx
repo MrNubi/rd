@@ -11,7 +11,7 @@ interface InputGroupProps {
 }
 
 export const InputGroup: React.FC<InputGroupProps> = ({
-  className = 'mb-2',
+  className = 'mb-2 ',
   type = 'text',
   placeholder = '',
   error,
@@ -25,7 +25,7 @@ export const InputGroup: React.FC<InputGroupProps> = ({
         type={type}
         style={{ minWidth: 300 }}
         className={cls(
-          `w-full p-3 transition duration-200 border border-gray-400 rounded bg-gray-50 focus:bg-white hover:bg-white`,
+          `w-full p-3 transition rounded-2xl text-center duration-200 border border-gray-400  bg-gray-50 focus:bg-white hover:bg-white`,
           { 'border-red-500': error }
           //cls(`이름`, {Boolean판정시 교체할 값:Boolean}) ->true면 Boolean판정시 교체할 값이, false면 백틱 안의 이름 출력
         )}
