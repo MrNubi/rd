@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useCallback, useState } from 'react';
 import InputGroup from '../components/InputGroup';
 import Link from 'next/link';
 import axios from 'axios';
@@ -39,7 +39,32 @@ const Login = () => {
       console.log(error);
       setErrors(error.response?.data || {});
     }
+
+    test(event);
   };
+
+  const test = useCallback(async (e: any) => {
+    e.preventDefault();
+
+    try {
+      const res = await axios
+        .post(
+          'https://memolucky.run.goorm.io/users/dj-rest-auth/login/',
+          { username: 'han1113', password: 'goddns1234' },
+          { withCredentials: true }
+        )
+        .then((r) => {
+          console.log(r);
+        })
+        .catch((error: any) => {
+          console.error(error);
+        });
+    } catch {
+      console.log('try-catch error');
+    }
+
+    //
+  }, []);
 
   return (
     <div style={{ background: '#BEBEBE' }}>

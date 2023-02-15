@@ -10,6 +10,9 @@ import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import head from 'next/head';
 import Head from 'next/head';
+import { FaBacon } from 'react-icons/fa';
+import Link from 'next/link';
+import Image from 'next/image';
 
 export default function App({ Component, pageProps }: AppProps) {
   config.autoAddCss = false;
@@ -36,6 +39,8 @@ export default function App({ Component, pageProps }: AppProps) {
           integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc"
           crossOrigin="anonymous"
         ></script>
+        <link rel="icon" href="/talk.png" />
+        <title>memo</title>
       </Head>
       <SWRConfig value={{ fetcher }}>
         <AuthProvider>

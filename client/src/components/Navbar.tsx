@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { useAuthDispatch, useAuthState } from '../context/auth';
 import { FaSearch } from 'react-icons/fa';
 
+import TextEditer from './textEditer';
+
 const navbar: React.FC = () => {
   const { loading, authenticated } = useAuthState();
   const dispatch = useAuthDispatch();
@@ -39,7 +41,7 @@ const navbar: React.FC = () => {
           </a>
         </Link>
       </span>
-      <div className="max-w-full px-4">
+      {/* <div className="max-w-full px-4">
         <div className="relative flex items-center bg-gray-100 border rounded hover:border-gray-700 hover:bg-white">
           <FaSearch className="ml-2 text-gray-400" />
           <input
@@ -48,6 +50,9 @@ const navbar: React.FC = () => {
             className="px-3 py-1 bg-transparent rounded h-7 focus:outline-none"
           />
         </div>
+      </div> */}
+      <div className=" border border-black w-80">
+        <TextEditer />
       </div>
 
       <div className="flex">
