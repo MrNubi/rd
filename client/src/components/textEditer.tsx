@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState, VFC } from 'react';
+import React, { ChangeEvent, useCallback, useRef, useState, VFC } from 'react';
 
 interface Props {
   className?: string;
@@ -26,6 +26,10 @@ const TextEditer = ({ className }: Props) => {
   const [clickStrike, setClickStrike] = useState(false);
   const [clickOL, setClickOL] = useState(false);
   const [clickUL, setClickUL] = useState(false);
+
+  const onEditerChange = useCallback((e: any) => {
+    console.log(e);
+  }, []);
 
   const onClickBold = useCallback(() => {
     // setClickBold((prev) => !prev);
@@ -139,6 +143,7 @@ const TextEditer = ({ className }: Props) => {
         className=" w-full max-w-full py-4 px-6 border border-solid border-gray-400 rounded overflow-auto flex-wrap "
         contentEditable="true"
         ref={editerRef}
+        onChange={onEditerChange}
       ></div>
     </div>
   );
