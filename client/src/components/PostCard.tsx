@@ -120,7 +120,9 @@ const PostCard = ({
         <Link legacyBehavior href={url}>
           <a className="my-1 text-lg font-medium">{title}</a>
         </Link>
-        {body && <p className="my-1 text-sm">{body}</p>}
+        {body && (
+          <p className=" max-h-20 overflow-y-auto  my-1 text-sm">{body}</p>
+        )}
         <div className="flex">
           <Link legacyBehavior href={url}>
             <a>
