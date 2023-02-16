@@ -146,9 +146,9 @@ const Home: NextPage = () => {
           {authenticated && (
             <div className="w-full py-6 text-center">
               <Link legacyBehavior href="/subs/create">
-                <a className="w-full p-2 text-center text-white bg-gray-400 rounded">
+                <div className="w-full p-2 text-center text-white bg-gray-400 rounded">
                   커뮤니티 만들기
-                </a>
+                </div>
               </Link>
             </div>
           )}
